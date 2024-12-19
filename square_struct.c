@@ -8,12 +8,12 @@ Board * BOARD_INIT(int width, int height){
 	Board * b = malloc(sizeof(Board));
 	b->height = height;
 	b->width = width;
-	b->board = malloc(width * sizeof(Square *));
+	b->board = malloc(height * sizeof(Square *));
 
 	//This creates rows first
 	for (int i = 0 ; i < height; i ++){
 		//Allocate room for entries in the rows
-		b->board[i] = malloc(width * sizeof(Square));
+		b->board[i] = malloc(width * sizeof(Square *));
 		//Create the columns
 		for (int j = 0 ; j  < width; j++){
 			//Assign the values for the board
@@ -29,7 +29,7 @@ Board * BOARD_INIT(int width, int height){
 
 //Function to go through and free every row, ultimatley, freeing itself
 void FREE_BOARD(Board *b){
-	for (int i = 0 ; i < STD_WIDTH; i ++){
+	for (int i = 0 ; i < b->height;	i ++){
 		free(b->board[i]);
 	}
 	free(b->board);
@@ -38,8 +38,8 @@ void FREE_BOARD(Board *b){
 
 //Basic function to print the board
 void PRINT_BOARD(Board *b){
-	for (int i = 0 ; i < b->width; i ++){
-		for (int j = 0 ; j < b->height; j++){
+	for (int i = 0 ; i < b->height; i ++){
+		for (int j = 0 ; j < b->width; j++){
 			printf("%c", b->board[i][j].rep);
 		}
 		printf("\n");
